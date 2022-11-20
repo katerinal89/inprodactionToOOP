@@ -1,28 +1,132 @@
 #include<iostream>
 using namespace std;
 
+#define WIDTH 27
+
 
 class Fraction
 {
-	int x; //числитель
-	int y; //знаминатель
+	int numerator; //числитель
+	int denominator; //знаминатель
+	int integer; //целая часть
 public:
-	Fraction(int x, int y)
+	int get_integer()const
 	{
-		this->x = x;
-		this->y = y;
+		return integer;
 	}
-}
 
+	int get_numerator()const
+	{
+		return numerator;
+	}
+
+	int get_denominator()const
+	{
+		return denominator;
+	}
+	void set_integer(int integer)
+	{
+		this->integer = integer;
+	}
+	void set_numerator(int numerator)
+	{
+		this->numerator = numerator;
+	}
+	void set_denominator(int denominator)
+	{
+		if (denominator == 0)denominator = 1;
+		this->denominator = denominator;
+	}
+	// Constructors:
+	Fraction()
+	{
+		this->integer = 0;
+		this->numerator = 0;
+		this->denominator = 1;
+		cout.width(WIDTH);
+		cout << std::left << "DefaultConstructor:" << this << endl;
+	}
+	Fraction(int integer)
+	{
+		this->integer = integer;
+		this->numerator = 0;
+		this->denominator = 1;
+		cout.width(WIDTH);
+		cout << std::left << "SingleArgumentConstructor:" << this << endl;
+	}
+	Fraction(int numerator, int denominator)
+	{
+		this->integer = 0;
+		this->numerator = numerator;
+		set_denominator(denominator);
+		cout.width(WIDTH);
+		cout << std::left << "Constructor:" << this << endl;
+	}
+	Fraction(int integer, int numerator, int denominator)
+	{
+		this->integer = integer;
+		this->numerator = numerator;
+		set_denominator(denominator);
+		cout.width(WIDTH);
+		cout << std::left << "Constructor:" << this << endl;
+	}
+	~Fraction()
+	{
+		cout.width(WIDTH);
+		cout << std::left << "Destructor:" << this << endl;
+	}
+	// Methods
+	void to_proper()
+	{
+		integer += numerator / denominator;
+		numerator %= denominator;
+	}
+	void to_improper()
+	{
+		numerator += integer * denominator;
+		integer = 0;
+	}
+	void print()const
+	{
+		if (integer)cout << integer << " ";
+		if (numerator)
+		{
+			cout << numerator << "/" << denominator;
+		}
+		else if (integer == 0)cout << 0;
+		cout << endl;
+
+	}
+};
+
+//#define CONSTRUCTORS_CHECK
 void main()
 {
 	setlocale(LC_ALL, "");
-	int x, y;
-	cout << "Введите числитель дроби: ";
-	cin >> x;
-	cout << "Введите знаменатель дроби: ";
-	cin >> y;
-	Fraction A(x, y);
-	cout << x << "/" << y << endl;
-	
+#ifdef DEBUG
+
+#endif // CONSTRUCTORS_CHECK
+	Fraction A; //Default constructor
+	A.print();
+
+	Fraction B = 5;// SingleArgumentConstructor
+	B.print();
+
+	Fraction C(1, 2);
+	C.print();
+
+	Fraction D(2, 3, 4);
+	D.print();
+
+	D.to_improper();
+	D.print();
+
+	D.to_proper();
+	D.print();
+
+	Fraction A(2, 3, 4);
+	Fraction B(3, 4, 5);
+	Fraction C = A * B;
+	C.print();
+
 }

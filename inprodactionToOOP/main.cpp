@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 
+
 class Point
 {
 	double x;
@@ -59,11 +60,11 @@ public:
 		cout << "Distructor: \t" << this << endl;
 	}
 
-
 	//  Methods:
 
-	double distance(Point other)
+	double distance(const Point& other) const
 	{
+		
 		double x_distance = this->x - other.x;
 		double y_distance = this->y - other.y;
 		double distance = sqrt(x_distance * x_distance + y_distance * y_distance);
@@ -77,7 +78,7 @@ public:
 	}
 };
 
-double distance(Point A, Point B)
+double distance(const Point& A, const Point& B)
 {
 	double x_distance = A.get_x() - B.get_x();
 	double y_distance = A.get_y() - B.get_y();
@@ -116,6 +117,7 @@ void main()
 	B.set_x(7);
 	B.set_y(8);
 	cout << "Расстояние от точки А до точки В: " << A.distance(B) << endl;
+	
 	cout << "Расстояние от точки В до точки А: " << B.distance(A) << endl;
 	cout << "Расстояние между точками А и В: " << distance(A, B) << endl;
 	cout << "Расстояние между точками B и A: " << distance(B, A) << endl;
